@@ -42,5 +42,5 @@ def add_review():
     return render_template('add.html')
 
 if __name__ == '__main__':
-    create_reviews_table()  # Ensure table exists
+    create_reviews_table()
     app.run(debug=True)
