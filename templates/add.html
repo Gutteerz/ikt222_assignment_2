@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center">Add a Review</h1>
+    <form action="/add" method="POST">
+        <div class="form-group">
+            <label for="review">Your Review</label>
+            <textarea class="form-control" id="review" name="review" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    </form>
+{% endblock %}
