@@ -3,41 +3,45 @@ import sqlite3
 
 app = Flask(__name__)
 
-# Database connection
+# Database
 def get_db_connection():
     conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
-# Function to create the reviews table
+# Lage 'Reviews' table
 def create_reviews_table():
-    conn = sqlite3.connect('database.db')
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS reviews (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            content TEXT NOT NULL
-        );
-    ''')
-    conn.commit()
-    conn.close()
+    with get_db_connection() as conn:
+        conn.execute('''
+            CREATE TABLE IF NOT EXISTS reviews (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                content TEXT NOT NULL
+            );
+        ''')
+        conn.commit()
 
-# Home route (display reviews)
+# Home
 @app.route('/')
 def index():
-    conn = get_db_connection()
-    reviews = conn.execute('SELECT * FROM reviews').fetchall()
-    conn.close()
+    with get_db_connection() as conn:
+        reviews = conn.execute('SELECT * FROM reviews').fetchall()
     return render_template('index.html', reviews=reviews)
 
-# Add review route
+# Home Safe
+@app.route('/safe')
+def index_safe():
+    with get_db_connection() as conn:
+        reviews = conn.execute('SELECT * FROM reviews').fetchall()
+    return render_template('index_safe.html', reviews=reviews)
+
+# Add Review
 @app.route('/add', methods=('GET', 'POST'))
 def add_review():
     if request.method == 'POST':
         review = request.form['review']
-        conn = get_db_connection()
-        conn.execute('INSERT INTO reviews (content) VALUES (?)', (review,))
-        conn.commit()
-        conn.close()
+        with get_db_connection() as conn:
+            conn.execute('INSERT INTO reviews (content) VALUES (?)', (review,))
+            conn.commit()
         return redirect('/')
     return render_template('add.html')
 

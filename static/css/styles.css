@@ -1,7 +1,13 @@
 body {
-    background-color: #f8f9fa;
+    background-color: whitesmoke;
 }
-
-h1 {
-    margin-bottom: 20px;
+.mainContainer {
+    background-color: darkgray;
+    border: black 1px solid;
+    padding: 4%;
+}
+.navbar {
+    background-color: darkgray;
+    border-bottom: black 1px solid;
+    padding: 0.5%;
 }
