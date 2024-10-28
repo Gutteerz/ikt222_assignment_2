@@ -11,3 +11,24 @@ body {
     border-bottom: black 1px solid;
     padding: 0.5%;
 }
+
+.rgb-text {
+    font-size: 1em;
+    font-weight: bold;
+    color: white;
+    animation: rgbAnimation 1.5s infinite;
+    text-shadow: 2px 2px 0 rgba(255, 0, 0, 0.7), -2px -2px 0 rgba(0, 255, 0, 0.7), 2px -2px 0 rgba(0, 0, 255, 0.7);
+}
+
+/* Animation keyframes */
+@keyframes rgbAnimation {
+    0%, 100% {
+       text-shadow: 2px 2px 0 rgba(255, 0, 0, 0.7), -2px -2px 0 rgba(0, 255, 0, 0.7), 2px -2px 0 rgba(0, 0, 255, 0.7);
+    }
+    33% {
+        text-shadow: -2px 2px 0 rgba(255, 0, 0, 0.7), 2px -2px 0 rgba(0, 255, 0, 0.7), -2px -2px 0 rgba(0, 0, 255, 0.7);
+    }
+    66% {
+        text-shadow: 2px -2px 0 rgba(255, 0, 0, 0.7), -2px 2px 0 rgba(0, 255, 0, 0.7), 2px 2px 0 rgba(0, 0, 255, 0.7);
+    }
+}

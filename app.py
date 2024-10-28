@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, url_for
 import sqlite3
 import bleach
 
@@ -35,14 +35,29 @@ def index_safe():
         reviews = conn.execute('SELECT * FROM reviews').fetchall()
     return render_template('index_safe.html', reviews=reviews)
 
+# Function to clear database
+@app.route('/clear_database', methods=['POST'])
+def clear_database():
+    with get_db_connection() as conn:
+        conn.execute("DELETE FROM reviews;")
+        conn.commit()
+    return redirect('/')
+
 # Add Review
 @app.route('/add', methods=('GET', 'POST'))
 def add_review():
     if request.method == 'POST':
         review = request.form['review']
-        bleachedReview = bleach.clean(review)
+
+        sanitize = 'sanitize' in request.form
+        # Sanitize review if true
+        if sanitize:
+            data = bleach.clean(review)
+        else:
+            data = review  # No sanitization
+
         with get_db_connection() as conn:
-            conn.execute('INSERT INTO reviews (content) VALUES (?)', (bleachedReview,))
+            conn.execute('INSERT INTO reviews (content) VALUES (?)', (data,))
             conn.commit()
         return redirect('/')
     return render_template('add.html')
