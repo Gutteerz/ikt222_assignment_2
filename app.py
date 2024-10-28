@@ -33,7 +33,14 @@ def index():
 def index_safe():
     with get_db_connection() as conn:
         reviews = conn.execute('SELECT * FROM reviews').fetchall()
-    return render_template('index_safe.html', reviews=reviews)
+
+    # Sanitize each review's content before rendering
+    sanitized_reviews = []
+    for review in reviews:
+        sanitized_content = bleach.clean(review['content'])  # sanitize each review content
+        sanitized_reviews.append({**review, 'content': sanitized_content})
+
+    return render_template('index_safe.html', reviews=sanitized_reviews)
 
 # Function to clear database
 @app.route('/clear_database', methods=['POST'])
