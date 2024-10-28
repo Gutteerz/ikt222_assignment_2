@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 import sqlite3
+import bleach
 
 app = Flask(__name__)
 
@@ -39,8 +40,9 @@ def index_safe():
 def add_review():
     if request.method == 'POST':
         review = request.form['review']
+        bleachedReview = bleach.clean(review)
         with get_db_connection() as conn:
-            conn.execute('INSERT INTO reviews (content) VALUES (?)', (review,))
+            conn.execute('INSERT INTO reviews (content) VALUES (?)', (bleachedReview,))
             conn.commit()
         return redirect('/')
     return render_template('add.html')
