@@ -1,13 +1,33 @@
 body {
-    background-color: whitesmoke;
+    background-color: #121212;
+    color: #f0f0f0;
 }
 .mainContainer {
-    background-color: darkgray;
-    border: black 1px solid;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
     padding: 4%;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    transition: transform 0.3s ease-in-out;
 }
+
+.list-group-item {
+    background: whitesmoke;
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.list-group-item:hover {
+     transform: translateY(-10px);
+}
+
 .navbar {
-    background-color: darkgray;
+    background-color: whitesmoke;
     border-bottom: black 1px solid;
     padding: 0.5%;
 }
